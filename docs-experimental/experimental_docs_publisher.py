@@ -32,7 +32,7 @@ def clone_git_on_borg_repo():
 def push_changes(language, package, version):
     subprocess.check_call(["git", "add", "."])
     subprocess.check_call(["git", "status"])
-    commit_msg = f"Publish documentation for {language}/{package}/{version}"
+    commit_msg = "Publish documentation for {}/{}/{}".format(language, package, version)
     subprocess.check_call(["git", "commit", "-m", commit_msg])
     subprocess.check_call(["git", "push", "direct", "master"])
 
