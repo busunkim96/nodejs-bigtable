@@ -2,12 +2,16 @@
 
 set -xeo pipefail
 
+# Kokoro currently uses 3.6.1
+pyenv 3.6.1
+
 export GITHUB_PACKAGE_ROOT=${KOKORO_ARTIFACTS_DIR}/github/nodejs-bigtable
 export GITHUB_PACKAGE_VERSION=$(python ${GITHUB_PACKAGE_ROOT}/docs-experimental/get_package_version.py ${GITHUB_PACKAGE_ROOT})
 export GITHUB_PACKAGE_LANGUAGE=nodejs
 export GITHUB_PACKAGE_DOCUMENTATION=${GITHUB_PACKAGE_ROOT}/.docs
 
 export PACKAGE=bigtable
+
 
 cd $GITHUB_PACKAGE_ROOT
 
