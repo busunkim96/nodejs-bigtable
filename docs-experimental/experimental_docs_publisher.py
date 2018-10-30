@@ -1,11 +1,10 @@
 import os
 import shutil
 import subprocess
-from pathlib import Path
 
 
 def run_cookie_daemon(kokoro_artifacts_dir):
-    gcompute_tools = Path(kokoro_artifacts_dir, "gcompute-tools")
+    gcompute_tools = os.path.join(kokoro_artifacts_dir, "gcompute-tools")
     subprocess.check_call(
         [
             "git",
@@ -14,16 +13,30 @@ def run_cookie_daemon(kokoro_artifacts_dir):
             gcompute_tools,
         ]
     )
-    subprocess.check_call([gcompute_tools / "git-cookie-authdaemon"])
+    subprocess.check_call([os.path.join(gcompute_tools, "git-cookie-authdaemon")])
 
 
 def clone_git_on_borg_repo():
     cwd = os.getcwd()
 
     repo_name = "library-reference-docs"
-    subprocess.check_call(["git", "clone","https://devrel.googlesource.com/cloud-docs/library-reference-docs"])
+    subprocess.check_call(
+        [
+            "git",
+            "clone",
+            "https://devrel.googlesource.com/cloud-docs/library-reference-docs",
+        ]
+    )
     os.chdir(repo_name)
-    subprocess.check_call(["git", "remote", "add", "direct", "https://devrel.googlesource.com/_direct/cloud-docs/library-reference-docs"])
+    subprocess.check_call(
+        [
+            "git",
+            "remote",
+            "add",
+            "direct",
+            "https://devrel.googlesource.com/_direct/cloud-docs/library-reference-docs",
+        ]
+    )
     os.chdir(cwd)
 
     return repo_name
@@ -51,11 +64,13 @@ def main():
     repo = clone_git_on_borg_repo()
 
     # Copy docs to repo
-    dest = Path(repo, language, package, version)
+    dest = os.path.join(repo, language, package, version)
     if os.path.isdir(dest):
-      shutil.rmtree(dest)
+        shutil.rmtree(dest)
 
-    shutil.copytree(package_documentation, Path(repo, language, package, version))
+    shutil.copytree(
+        package_documentation, os.path.join(repo, language, package, version)
+    )
     os.chdir(repo)
     push_changes(language, package, version)  # Commit and push
 
