@@ -2,13 +2,11 @@
 
 set -xeo pipefail
 
+export PACKAGE=bigtable
 export GITHUB_PACKAGE_ROOT=${KOKORO_ARTIFACTS_DIR}/github/nodejs-bigtable
 export GITHUB_PACKAGE_VERSION=$(python ${GITHUB_PACKAGE_ROOT}/docs-experimental/get_package_version.py ${GITHUB_PACKAGE_ROOT})
 export GITHUB_PACKAGE_LANGUAGE=nodejs
-export GITHUB_PACKAGE_DOCUMENTATION=${GITHUB_PACKAGE_ROOT}/.docs
-
-export PACKAGE=bigtable
-
+export GITHUB_PACKAGE_DOCUMENTATION=${GITHUB_PACKAGE_ROOT}/docs/@google-cloud/nodejs-${PACKAGE}/${GITHUB_PACKAGE_VERSION}
 
 cd $GITHUB_PACKAGE_ROOT
 
