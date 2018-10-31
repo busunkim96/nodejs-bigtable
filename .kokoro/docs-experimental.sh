@@ -2,13 +2,14 @@
 
 set -xeo pipefail
 
-export PACKAGE=bigtable
-export GITHUB_PACKAGE_ROOT=${KOKORO_ARTIFACTS_DIR}/github/nodejs-bigtable
-export GITHUB_PACKAGE_VERSION=$(python ${GITHUB_PACKAGE_ROOT}/docs-experimental/get_package_version.py ${GITHUB_PACKAGE_ROOT})
-export GITHUB_PACKAGE_LANGUAGE=nodejs
-export GITHUB_PACKAGE_DOCUMENTATION=${GITHUB_PACKAGE_ROOT}/docs/@google-cloud/${PACKAGE}/${GITHUB_PACKAGE_VERSION}
+ROOT=${KOKORO_ARTIFACTS_DIR}/github/nodejs-bigtable
 
-cd $GITHUB_PACKAGE_ROOT
+export PACKAGE=bigtable
+export PACKAGE_VERSION=$(python ${ROOT}/docs-experimental/get_package_version.py ${ROOT})
+export PACKAGE_LANGUAGE=nodejs
+export PACKAGE_DOCUMENTATION=${ROOT}/docs/@google-cloud/${PACKAGE}/${PACKAGE_VERSION}
+
+cd ${ROOT}
 
 # Build docs
 export NPM_CONFIG_PREFIX=/home/node/.npm-global
@@ -22,4 +23,4 @@ git config --global user.email "busunkim@google.com"
 git config --global user.name "Bu Sun Kim"
 
 # docs-publisher will push the docs to git-on-borg repo
-python ${GITHUB_PACKAGE_ROOT}/docs-experimental/experimental_docs_publisher.py
+python ${ROOT}/docs-experimental/experimental_docs_publisher.py

@@ -53,12 +53,10 @@ def push_changes(language, package, version):
 def main():
     kokoro_artifacts_dir = os.environ["KOKORO_ARTIFACTS_DIR"]
     package = os.environ["PACKAGE"]
-    language = os.environ["GITHUB_PACKAGE_LANGUAGE"]
-    version = os.environ["GITHUB_PACKAGE_VERSION"]
-    package_root = os.environ["GITHUB_PACKAGE_ROOT"]
-    package_documentation = os.environ["GITHUB_PACKAGE_DOCUMENTATION"]
+    language = os.environ["PACKAGE_LANGUAGE"]
+    version = os.environ["PACKAGE_VERSION"]
+    package_documentation = os.environ["PACKAGE_DOCUMENTATION"]
 
-    os.chdir(package_root)
     run_cookie_daemon(kokoro_artifacts_dir)
 
     repo = clone_git_on_borg_repo()
