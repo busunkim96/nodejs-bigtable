@@ -17,5 +17,9 @@ npm install
 
 npm run docs
 
+# Set git account identity
+git config --global user.email "busunkim@google.com"
+git config --global user.name "Bu Sun Kim"
+
 # docs-publisher will push the docs to git-on-borg repo
 python ${GITHUB_PACKAGE_ROOT}/docs-experimental/experimental_docs_publisher.py
